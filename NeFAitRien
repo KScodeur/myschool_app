@@ -1,0 +1,19 @@
+Ihttp://127.0.0.1:8000/
+ <?php foreach ($elevesList as $eleveList):?>
+              <tr>
+                <td><?=$eleveList['id']?></td>
+                <td><?=$eleveList['nom']?></td>
+                <td><?=$eleveList['prenom']?></td>
+                <td><?=$eleveList['date-naissance']?></td>
+                <td><?=$eleveList['sexe']?></td>
+              </tr>
+              <?php endforeach ?> --}}
+
+              <?php
+            $db= new PDO('mysql:host=localhost:3308;dbname=myschool;charset=utf8','root','root');
+            $selectEleves=$db->prepare("SELECT * FROM eleves JOIN classes ON eleves.classe_id = classes.id");
+            $selectEleves->execute()
+            $elevesList=$selectEleves->fetchALl()
+            ?>
+
+            btn-block
