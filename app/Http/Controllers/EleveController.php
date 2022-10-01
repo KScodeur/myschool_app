@@ -11,14 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class EleveController extends Controller{
-   //fonction permettant le dashboard
-//    public function authentification()
-//    {
-//        return view('authentification');
-//    }
-
-
-    // pour inserer un "élève" c-a-dire l"affichage de la page de formulaire
     public function create()
     {
         if(Session::has('loginId')){
@@ -83,7 +75,6 @@ class EleveController extends Controller{
             $eleves=Eleve::where('nom','LIKE','%'.$search.'%')
                             ->orWhere('prenom','LIKE','%'.$search.'%')
                             ->orWhere('sexe','LIKE','%'.$search.'%')
-                            ->orWhere('nom_classe','LIKE','%'.$search.'%')
                             ->get(); 
             $classes=Classe::get();
             
@@ -142,90 +133,4 @@ class EleveController extends Controller{
         // $data->delete();
         // return redirect('create/list')->with("success","élève supprimer avec succès");
     }
-    // public function search(Request $request){
-    //     $eleves=Eleve::where('nom','LIKE','%'.$request->search.'%')->get();
-    //     foreach($eleves as $eleve){
-    //         $output=
-    //         '<tr>
-    //         <td>'.$eleve->nom.'</td>
-    //         </tr>';
-    //     }
-    //     return response($output);
-    // }
-   
-    // public function search(){
-    //     $eleves=Eleve::get();
-    //     $classes=Classe::get();
-    //     if(isset($_GET['search'])){
-    //         $search=$_GET['search'];
-    //         $someone=Eleve::where('nom','LIKE','%'.$search.'%')->get();
-    //     return view('getAllEleves',compact('eleves','classes','someone'));
-    //     }else{
-    //         return view('getAllEleves',compact('eleves','classes'));
-    //     }
-       
-    //     // $search=request()->input('search');
-    //     // dd($search);
-    //     // $searcheleves=Eleve::where('nom','LIKE','%'.$search.'%')->paginate(6); 
-    //     // return view('search',compact('eleves','classes','searcheleves'))->with('searcheleves', $searcheleves);
-    //     return view('search',compact('eleves','classes','searcheleves'));
-    // }
-    // public function search(){
-    //     $eleves=Eleve::get();
-    //     $classes=Classe::get();
-    //     $search=request()->input('search');
-    //     // dd($search);
-    //     $searcheleves=Eleve::where('nom','LIKE','%'.$search.'%')->paginate(6); 
-    //     return view('search',compact('eleves','classes','searcheleves'))->with('searcheleves', $searcheleves);
-    // }
-    // public function update(Request $request,$id)
-    // {
-    //     // $eleve=Eleve::get();
-    //     // $eleves=Eleve::find($id);
-    //     // $eleves->nom = $request->input('nom');
-    //     // $eleves->prenom = $request->input('prenom');
-    //     // $eleves->date_naissance = $request->input('date_naissance');
-    //     // $eleves->lieu_naissance = $request->input('lieu_naissance');
-    //     // $eleves->nom_pere = $request->input('nom_pere');
-    //     // $eleves->nationalite = $request->input('nationalite');
-    //     // $eleves->sexe = $request->input('sexe');
-    //     // $eleves->nom_pere = $request->input('nom_pere');
-    //     // $eleves->pere_profession = $request->input('pere_profession');
-    //     // $eleves->tel = $request->input('tel');
-    //     // $eleves->nom_mere = $request->input('nom_mere');
-    //     // $eleves->mere_profession = $request->input('mere_profession');
-    //     // $eleves->email = $request->input('email');
-
-    //     // $request->update();
-     
-    //     // $eleves::update($request->all()); 
-    //     // $request->update();
-    //     // return $this->to($this->generator->action($action, $parameters), $status, $headers);
-    //     $data = $request->validate([
-    //              "classe_id",
-    //              "nom"=>"required",
-    //              "prenom"=>"required",
-    //              "date_naissance",
-    //              "lieu_naissance",
-    //              "nom_pere", 
-    //              "nationalite",
-    //              "sexe", 
-    //              "nom_pere", 
-    //              "pere_profession", 
-    //              "tel",
-    //              "nom_mere",
-    //              "mere_profession",
-    //              "email" ]);
-
-    //     Eleve::update($request->all()); 
-
-    //     $eleves=Eleve::get();
-    //     // $eleves->fill($data);
-    //     // $eleves->save();
-
-        
-    //     return redirect('create/list')->with("success","élève ajouter avec succès"); 
-    // }
- 
-} 
- 
+}

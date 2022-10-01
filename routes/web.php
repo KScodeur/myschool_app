@@ -21,12 +21,15 @@ use App\Http\Controllers\MatiereController;
 */
 // route pour la page d'authentification
 Route::get('/',[AuthController::class,'login'])->name('login'); 
+
 // pour la page d'enregistrer un admin
 Route::get('/registration',[AuthController::class,'registration'])->name('authentificate');
 
-Route::get('/register_user',[AuthController::class,'registerUser'])->name('registerUser');
+//pour enregistrer un admin
+Route::post('/register',[AuthController::class,'registerUser'])->name('registerUser');
 
-Route::post('/register_user',[AuthController::class,'loginUser'])->name('login_user');
+//connection
+Route::post('/registrer_user',[AuthController::class,'loginUser'])->name('login_user');
 
 // pour se déconnecter
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
@@ -36,6 +39,7 @@ Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
 // route pour le dashoard d'acceuil
 Route::get('/eleve',[AuthController::class,'index'])->name('dashboard');
+
 // route de l'inscription
 Route::get('eleve/create',[EleveController::class,'create'])->name('createEleve');
 
@@ -101,9 +105,8 @@ Route::get('/matieres',[MatiereController::class,'read'])->name('matieres');
 // enregistrer une matière
 Route::post('matiere/create',[MatiereController::class,'store'])->name('storeMatiere');
 // pour editer une matiere
-Route::get('/editmatiere/{id}',[ProfController::class,'edit'])->name('editMatiere');
+Route::get('editmatiere/{id}',[MatiereController::class,'edit'])->name('editMatiere');
 //pour mettre a jour
-Route::put('update-matiere/{id}',[ProfController::class,'update'])->name('updateMatiere');
+Route::put('update-matiere/{id}',[MatiereController::class,'update'])->name('updateMatiere');
 // pour supprimer une matiere
 Route::get('deleteMatiere/{id}',[MatiereController::class,'delete'])->name('deleteMatiere');
-

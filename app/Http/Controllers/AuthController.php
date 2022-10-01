@@ -19,15 +19,11 @@ class AuthController extends Controller
     }
     public function registration()
     {
-        // $request->validate([
-        //     'nom_utilisateur'=>'required',
-        //     'password'=>'required|min:5|max:12'
-        // ]); 
-        // $request=Utilisateur::where('nom_utilisateur','=',$request->nom_utilisateur);
-       
-        // if(auth()->attempt($request->only('nom_utilisateur','password'))){
-        //     return redirect()->route('dashboard');
-        // }
+        if(Session::has('loginId')){
+            Utilisateur::where('id',Session::get('loginId'))->first();
+            }else{
+                return redirect('/');
+            }
         return view('auth.registration');
     }
     public function loginUser(Request $request){
@@ -42,15 +38,15 @@ class AuthController extends Controller
                 $request->session()->put('loginId',$utilisateur->id);
                 return redirect('/eleve');
                 // return view('dashboard');
-            // }else{
-            //     return back()->with('fail','utilisateur où mot de passe incorrect');
-            // }        
+                  
+            }else{
+                return back()->with('fail','utilisateur où mot de passe incorrect');
+                
+            }
+        // return view('dashboard');
         }else{
             return back()->with('fail','utilisateur où mot de passe incorrect');
-            
         }
-        return view('dashboard');
-    }
     
 }
 
@@ -79,27 +75,24 @@ public function index()
     // pour enregistrer un utilisateur
     public function registerUser(Request $request )
     {
+        
          $request->validate([
             'nom'=>'required',
             'prenom'=>'required',
-            'email'=>'required|email|unique:utilisateurs',
-            'nom_utlisateur'=>'required',
-            'password'=>'required|min:5|max:12'
+            'email'=>['required','email'],
+            'nom_utilisateur'=>'required',
+            'password'=>["required","min:5",'max:12']
         ]); 
-        $utilisateur=Utilisateur::get();
-        // ou 
-        // $utilisateur= new Utilisateur;
-        // 
+        // dd($request);
+        $utilisateur=new Utilisateur;
         $utilisateur->nom=$request->nom;
         $utilisateur->prenom=$request->prenom;
         $utilisateur->email=$request->email;
-        $utilisateur->nom_utlisateur=$request->nom_utlisateur;
-        $utilisateur->password=Hash::make($request->password);
-
-        $register=Utilisateur::create($request->all()); 
-        // ou
-        // $register =$utilisateur->save();
-        if ($register) {
+        $utilisateur->nom_utlisateur=$request->nom_utilisateur;
+        $utilisateur->password=$request->password;
+        
+        $register =$utilisateur->save();
+        if($register){
             return back()->with("success","admin ajouter avec succès");
         }else{
             return back()->with('fail','something wrong');
@@ -111,5 +104,8 @@ public function index()
         if(Session::has('loginId'))
         Session::pull('loginId');
         return redirect('/');
+        // SweetAlert:: ² 
     }
 }
+
+

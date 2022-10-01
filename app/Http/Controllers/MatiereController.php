@@ -34,8 +34,9 @@ class MatiereController extends Controller
     // reviens sur la meme page ou il y a le formulaire et affiche le message
         return back()->with("success","Matiere ajouter avec succès");
     }
+
     public function delete($id)
-{
+    {
     $data=Matiere::find($id);
     if ($data != null) {
         $data->delete();
@@ -43,6 +44,27 @@ class MatiereController extends Controller
     }
     return back()->with("success","Matiere supprimer avec succès");
 
-}
+    }
+
+    public function edit($id)
+{
+    if(Session::has('loginId')){
+        $data=Utilisateur::where('id',Session::get('loginId'))->first();
+        }else{
+            return redirect('/');
+        }
+        $matieres=Matiere::find($id);
+        return view('/editMatiere',compact('matieres','data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+      
+        
+        $matieres =Matiere::find($id);
+        $input = $request->all();
+        $matieres->update($input);
+        return redirect('/matieres')->with('success', 'mise a jour accompli');  
+    }
 
 }
